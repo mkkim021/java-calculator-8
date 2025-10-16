@@ -1,6 +1,7 @@
 package calculator.controller;
 
 
+import calculator.model.Calculator;
 import calculator.view.InputView;
 import calculator.view.OutputView;
 
@@ -24,7 +25,7 @@ public class Controller {
             outputView.printResult(result);
 
         } catch (Exception e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }
