@@ -20,7 +20,7 @@ public class Validator {
             throw new IllegalArgumentException("음수인 수가 있습니다");
         }
 
-        if (token.matches("\\d+")) {
+        if (!token.matches("\\d+")) {
             throw new IllegalArgumentException("문자가 포함되어 있습니다");
 
         }

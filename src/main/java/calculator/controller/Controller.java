@@ -19,13 +19,11 @@ public class Controller {
     }
 
     public void run() {
-        try {
-            String input = inputView.getInput();
-            int result = calculator.calculate(input);
-            outputView.printResult(result);
 
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        String input = inputView.getInput();
+        int result = calculator.calculate(input);
+        outputView.printResult(result);
+
+
     }
 }

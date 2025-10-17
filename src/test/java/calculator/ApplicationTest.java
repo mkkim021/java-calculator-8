@@ -27,7 +27,15 @@ class ApplicationTest extends NsTest {
     @Test
     void 구분자만_입력_테스트() {
         assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("//;\n"))
+                assertThatThrownBy(() -> runException("//;\\n"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 구분자외_문자가_포함_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\na;2"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
