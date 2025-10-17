@@ -26,7 +26,7 @@ public class InputParser {
         String parsedInput = parsed[1];
 
         validator.validateParsedInput(parsedInput);
-        
+
         return extractNumbers(delimiter, parsedInput);
     }
 
@@ -34,11 +34,16 @@ public class InputParser {
 
         if (input.startsWith(CUSTOM_DELIMITER_PREFIX)) {
 
+            validator.validateCustomDeliPostfix(input);
+
             String normalInput = input.replace("\\n", CUSTOM_DELIMITER_POSTFIX);
 
             int deliPostIdx = normalInput.indexOf(CUSTOM_DELIMITER_POSTFIX);
 
             String customDeli = normalInput.substring(2, deliPostIdx);
+
+            validator.validateCustomDelimiter(customDeli);
+
             String convertInput = normalInput.substring(deliPostIdx + 1);
             String normalDeli = "[" + customDeli + "]";
             return new String[]{normalDeli, convertInput};

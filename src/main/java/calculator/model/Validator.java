@@ -25,4 +25,26 @@ public class Validator {
 
         }
     }
+
+    public void validateCustomDelimiter(String customDeli) {
+        if (customDeli.isEmpty()) {
+            throw new IllegalArgumentException("커스텀 구분자가 비었습니다");
+        }
+        if (customDeli.length() != 1) {
+            throw new IllegalArgumentException("커스텀 구분자는 한 글자만 가능합니다");
+        }
+        if (customDeli.matches("\\d")) {
+            throw new IllegalArgumentException("숫자는 커스텀 구분자가 불가능합니다");
+        }
+
+
+    }
+
+    public void validateCustomDeliPostfix(String input) {
+        if (!input.contains("\n")) {
+            throw new IllegalArgumentException("커스텀 구분자 형식이 잘못됐습니다");
+        }
+
+
+    }
 }
