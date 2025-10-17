@@ -9,25 +9,31 @@ public class InputParser {
     private static final String CUSTOM_DELIMITER_PREFIX = "//";
     private static final String CUSTOM_DELIMITER_POSTFIX = "\n";
 
+    private final Validator validator;
+
+    public InputParser() {
+        this.validator = new Validator();
+    }
 
     public List<Integer> parsing(String input) {
-        if (input == null || input.isEmpty()) {
+
+        if (validator.isEmptyInput(input)) {
             return Collections.emptyList();
         }
+
         String[] parsed = extractCustomDeli(input);
         String delimiter = parsed[0];
         String parsedInput = parsed[1];
 
-        if (parsedInput == null || parsedInput.isEmpty()) {
-            return Collections.emptyList();
-        }
-
+        validator.validateParsedInput(parsedInput);
+        
         return extractNumbers(delimiter, parsedInput);
     }
 
     public String[] extractCustomDeli(String input) {
 
         if (input.startsWith(CUSTOM_DELIMITER_PREFIX)) {
+
             String normalInput = input.replace("\\n", CUSTOM_DELIMITER_POSTFIX);
 
             int deliPostIdx = normalInput.indexOf(CUSTOM_DELIMITER_POSTFIX);
@@ -43,10 +49,12 @@ public class InputParser {
 
 
     public List<Integer> extractNumbers(String delimiter, String input) {
+
         String[] tokens = input.split(delimiter);
         List<Integer> numbers = new ArrayList<>();
 
         for (String token : tokens) {
+            validator.validateToken(token);
             numbers.add(Integer.parseInt(token));
         }
         return numbers;
