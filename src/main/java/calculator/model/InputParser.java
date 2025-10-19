@@ -2,17 +2,23 @@ package calculator.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class InputParser {
-    private static final String DEFAULT_DELIMITER = "[,:]";
+
     private static final String CUSTOM_DELIMITER_PREFIX = "//";
     private static final String CUSTOM_DELIMITER_POSTFIX = "\n";
 
     private final Validator validator;
 
+    private Set<Character> delimiters = new HashSet<>();
+
     public InputParser(Validator validator) {
         this.validator = validator;
+        this.delimiters.add(',');
+        this.delimiters.add(':');
     }
 
     public List<Integer> parsing(String input) {
@@ -20,16 +26,14 @@ public class InputParser {
             return Collections.emptyList();
         }
 
-        String[] parsed = extractCustomDeli(input);
-        String delimiter = parsed[0];
-        String parsedInput = parsed[1];
+        String targetInput = extractCustomDeli(input);
 
-        validator.validateParsedInput(parsedInput);
+        validator.validateParsedInput(targetInput);
 
-        return extractNumbers(delimiter, parsedInput);
+        return extractNumbers(targetInput);
     }
 
-    public String[] extractCustomDeli(String input) {
+    public String extractCustomDeli(String input) {
 
         if (input.startsWith(CUSTOM_DELIMITER_PREFIX)) {
 
@@ -43,24 +47,36 @@ public class InputParser {
 
             validator.validateCustomDelimiter(customDeli);
 
-            String convertInput = normalInput.substring(deliPostIdx + 1);
-            String normalDeli = "[" + customDeli + "]";
-            return new String[]{normalDeli, convertInput};
+            delimiters.add(customDeli.charAt(0));
+
+            return normalInput.substring(deliPostIdx + 1);
         }
 
-        return new String[]{DEFAULT_DELIMITER, input};
+        return input;
     }
 
 
-    public List<Integer> extractNumbers(String delimiter, String input) {
+    public List<Integer> extractNumbers(String targetInput) {
 
-        String[] tokens = input.split(delimiter, -1);
         List<Integer> numbers = new ArrayList<>();
+        StringBuilder token = new StringBuilder();
 
-        for (String token : tokens) {
-            validator.validateToken(token);
-            numbers.add(Integer.parseInt(token));
+        for (char c : targetInput.toCharArray()) {
+            if (delimiters.contains(c)) {
+                validator.validateToken(token.toString());
+                numbers.add(Integer.parseInt(token.toString()));
+                token = new StringBuilder();
+            } else {
+                token.append(c);
+            }
         }
+        if (!token.isEmpty()) {
+            validator.validateToken(token.toString());
+            numbers.add(Integer.parseInt(token.toString()));
+        } else {
+            validator.validateEndDelimiter();
+        }
+
         return numbers;
     }
 }
