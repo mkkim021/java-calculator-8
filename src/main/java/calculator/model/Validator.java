@@ -9,7 +9,7 @@ public class Validator {
 
     public void validateParsedInput(String input) {
         if (isEmptyInput(input)) {
-            throw new IllegalArgumentException("문자열 형식이 잘못됐습니다");
+            throw new IllegalArgumentException("문자열 내용이 잘못됐습니다");
 
         }
     }
@@ -41,7 +41,7 @@ public class Validator {
     }
 
     public void validateCustomDeliPostfix(String input) {
-        if (!input.contains("\n")) {
+        if (!input.contains("\\n")) {
             throw new IllegalArgumentException("커스텀 구분자 형식이 잘못됐습니다");
         }
 
