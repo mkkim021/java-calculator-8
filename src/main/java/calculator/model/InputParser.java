@@ -58,6 +58,8 @@ public class InputParser {
 
     public List<Integer> extractNumbers(String targetInput) {
 
+        validator.validateDelimiters(targetInput);
+
         List<Integer> numbers = new ArrayList<>();
         StringBuilder token = new StringBuilder();
 
@@ -71,10 +73,7 @@ public class InputParser {
             }
         }
         if (!token.isEmpty()) {
-            validator.validateToken(token.toString());
             numbers.add(Integer.parseInt(token.toString()));
-        } else {
-            validator.validateEndDelimiter();
         }
 
         return numbers;
