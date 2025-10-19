@@ -55,7 +55,7 @@ public class InputParser {
 
     public List<Integer> extractNumbers(String delimiter, String input) {
 
-        String[] tokens = input.split(delimiter);
+        String[] tokens = input.split(delimiter, -1);
         List<Integer> numbers = new ArrayList<>();
 
         for (String token : tokens) {
