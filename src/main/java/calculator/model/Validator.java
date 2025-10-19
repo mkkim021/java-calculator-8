@@ -16,7 +16,7 @@ public class Validator {
 
     public void validateToken(String token) {
         if (token.isEmpty()) {
-            throw new IllegalArgumentException("구분자가 연속 혹은 끝에 구분자가 있습니다");
+            throw new IllegalArgumentException("구분자가 연속 혹은 앞에 구분자가 있습니다");
         }
         if (token.startsWith("-")) {
             throw new IllegalArgumentException("음수인 수가 있습니다");
@@ -48,5 +48,9 @@ public class Validator {
         }
 
 
+    }
+
+    public void validateEndDelimiter() {
+        throw new IllegalArgumentException("끝에 구분자가 있습니다");
     }
 }
