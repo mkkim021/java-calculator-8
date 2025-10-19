@@ -6,8 +6,8 @@ public class Calculator {
 
     private final InputParser parser;
 
-    public Calculator() {
-        this.parser = new InputParser();
+    public Calculator(InputParser parser) {
+        this.parser = parser;
     }
 
     public int calculate(String input) {

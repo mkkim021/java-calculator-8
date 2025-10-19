@@ -11,12 +11,11 @@ public class InputParser {
 
     private final Validator validator;
 
-    public InputParser() {
-        this.validator = new Validator();
+    public InputParser(Validator validator) {
+        this.validator = validator;
     }
 
     public List<Integer> parsing(String input) {
-
         if (validator.isEmptyInput(input)) {
             return Collections.emptyList();
         }
