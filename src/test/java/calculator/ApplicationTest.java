@@ -40,6 +40,21 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 구분자가_마지막에_나오는_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\n3;3;"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 처음에_구분자가_나오는_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\n;3;3;"))
+        );
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
