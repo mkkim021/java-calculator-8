@@ -5,13 +5,42 @@ import java.util.Set;
 
 public class Validator {
 
-    public boolean isEmptyInput(String targetInput) {
-        return targetInput == null || targetInput.isEmpty();
+    private static void validateStartWithDeli(Set<Character> delimiter, String targetInput) {
+        if (delimiter.contains(targetInput.charAt(0))) {
+            throw new IllegalArgumentException("처음에 구분자가 있습니다");
+        }
+    }
+
+    private static void validateConsecutiveDeli(Set<Character> delimiter, String targetInput) {
+        for (int i = 0; i < targetInput.length() - 1; i++) {
+            if (delimiter.contains(targetInput.charAt(i))
+                    && delimiter.contains(targetInput.charAt(i + 1))) {
+                throw new IllegalArgumentException("구분자가 연속으로 나타났습니다");
+            }
+        }
+    }
+
+    private static void validateInvalidDeli(Set<Character> delimiter, String targetInput) {
+        for (char c : targetInput.toCharArray()) {
+            if (!Character.isDigit(c) && !delimiter.contains(c)) {
+                throw new IllegalArgumentException("정의되지 않은 구분자가 포함되었습니다: " + c);
+            }
+        }
+    }
+
+    private static void validateEndWithDeli(Set<Character> delimiter, String targetInput) {
+        if (delimiter.contains(targetInput.charAt(targetInput.length() - 1))) {
+            throw new IllegalArgumentException("끝에 구분자가 있습니다");
+        }
+    }
+
+    public boolean isEmptyInput(String input) {
+        return input == null || input.isEmpty();
     }
 
     public void validateTargetInput(String targetInput) {
         if (isEmptyInput(targetInput)) {
-            throw new IllegalArgumentException("문자열 내용이 비었습니다");
+            throw new IllegalArgumentException("타깃 문자열이 비었습니다");
 
         }
 
@@ -52,27 +81,10 @@ public class Validator {
     }
 
     public void validateDelimiters(Set<Character> delimiter, String targetInput) {
-
-        if (delimiter.contains(targetInput.charAt(0))) {
-            throw new IllegalArgumentException("처음에 구분자가 있습니다");
-        }
-
-        if (delimiter.contains(targetInput.charAt(targetInput.length() - 1))) {
-            throw new IllegalArgumentException("끝에 구분자가 있습니다");
-        }
-
-        for (char c : targetInput.toCharArray()) {
-            if (!Character.isDigit(c) && !delimiter.contains(c)) {
-                throw new IllegalArgumentException("정의되지 않은 구분자가 포함되었습니다: " + c);
-            }
-        }
-
-        for (int i = 0; i < targetInput.length() - 1; i++) {
-            if (delimiter.contains(targetInput.charAt(i))
-                    && delimiter.contains(targetInput.charAt(i + 1))) {
-                throw new IllegalArgumentException("구분자가 연속으로 나타났습니다");
-            }
-        }
+        validateStartWithDeli(delimiter, targetInput);
+        validateEndWithDeli(delimiter, targetInput);
+        validateInvalidDeli(delimiter, targetInput);
+        validateConsecutiveDeli(delimiter, targetInput);
 
     }
 }
