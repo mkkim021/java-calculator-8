@@ -3,12 +3,12 @@ package calculator.model;
 
 public class Validator {
 
-    public boolean isEmptyInput(String input) {
-        return input == null || input.isEmpty();
+    public boolean isEmptyInput(String targetInput) {
+        return targetInput == null || targetInput.isEmpty();
     }
 
-    public void validateParsedInput(String input) {
-        if (isEmptyInput(input)) {
+    public void validateTargetInput(String targetInput) {
+        if (isEmptyInput(targetInput)) {
             throw new IllegalArgumentException("문자열 내용이 비었습니다");
 
         }
@@ -48,20 +48,21 @@ public class Validator {
 
     }
 
-    public void validateDelimiters(String input) {
+    public void validateDelimiters(String targetInput) {
 
-        if (input.charAt(0) == ',' || input.charAt(0) == ':') {
+        if (targetInput.charAt(0) == ',' || targetInput.charAt(0) == ':') {
             throw new IllegalArgumentException("처음에 구분자가 있습니다");
         }
 
-        if (input.charAt(input.length() - 1) == ',' || input.charAt(input.length() - 1) == ':') {
+        if (targetInput.charAt(targetInput.length() - 1) == ','
+                || targetInput.charAt(targetInput.length() - 1) == ':') {
             throw new IllegalArgumentException("끝에 구분자가 있습니다");
         }
 
         // 연속 구분자 체크
-        for (int i = 0; i < input.length() - 1; i++) {
-            if ((input.charAt(i) == ',' || input.charAt(i) == ':') &&
-                    (input.charAt(i + 1) == ',' || input.charAt(i + 1) == ':')) {
+        for (int i = 0; i < targetInput.length() - 1; i++) {
+            if ((targetInput.charAt(i) == ',' || targetInput.charAt(i) == ':') &&
+                    (targetInput.charAt(i + 1) == ',' || targetInput.charAt(i + 1) == ':')) {
                 throw new IllegalArgumentException("구분자가 연속으로 나타났습니다");
             }
         }

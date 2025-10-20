@@ -28,7 +28,7 @@ public class InputParser {
 
         String targetInput = extractCustomDeli(input);
 
-        validator.validateParsedInput(targetInput);
+        validator.validateTargetInput(targetInput);
 
         return extractNumbers(targetInput);
     }
