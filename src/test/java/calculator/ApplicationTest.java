@@ -52,6 +52,15 @@ class ApplicationTest extends NsTest {
     void 처음에_구분자가_나오는_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("//;\\n;3;3;"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 구분자외_다른_문자가_입력되는_테스트() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\n3^3"))
+                        .isInstanceOf(IllegalArgumentException.class)
         );
     }
 
