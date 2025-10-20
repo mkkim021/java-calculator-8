@@ -61,6 +61,12 @@ public class Validator {
             throw new IllegalArgumentException("끝에 구분자가 있습니다");
         }
 
+        for (char c : targetInput.toCharArray()) {
+            if (!Character.isDigit(c) && !delimiter.contains(c)) {
+                throw new IllegalArgumentException("정의되지 않은 구분자가 포함되었습니다: " + c);
+            }
+        }
+
         for (int i = 0; i < targetInput.length() - 1; i++) {
             if (delimiter.contains(targetInput.charAt(i))
                     && delimiter.contains(targetInput.charAt(i + 1))) {
