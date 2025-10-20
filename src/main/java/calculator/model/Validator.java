@@ -14,6 +14,7 @@ public class Validator {
             throw new IllegalArgumentException("문자열 내용이 비었습니다");
 
         }
+
     }
 
     public void validateToken(String token) {
@@ -60,12 +61,12 @@ public class Validator {
             throw new IllegalArgumentException("끝에 구분자가 있습니다");
         }
 
-        // 연속 구분자 체크
         for (int i = 0; i < targetInput.length() - 1; i++) {
-            if ((targetInput.charAt(i) == ',' || targetInput.charAt(i) == ':') &&
-                    (targetInput.charAt(i + 1) == ',' || targetInput.charAt(i + 1) == ':')) {
+            if (delimiter.contains(targetInput.charAt(i))
+                    && delimiter.contains(targetInput.charAt(i + 1))) {
                 throw new IllegalArgumentException("구분자가 연속으로 나타났습니다");
             }
         }
+
     }
 }
