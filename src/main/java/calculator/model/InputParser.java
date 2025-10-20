@@ -58,7 +58,7 @@ public class InputParser {
 
     public List<Integer> extractNumbers(String targetInput) {
 
-        validator.validateDelimiters(targetInput);
+        validator.validateDelimiters(delimiters, targetInput);
 
         List<Integer> numbers = new ArrayList<>();
         StringBuilder token = new StringBuilder();

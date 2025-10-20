@@ -1,6 +1,8 @@
 package calculator.model;
 
 
+import java.util.Set;
+
 public class Validator {
 
     public boolean isEmptyInput(String targetInput) {
@@ -48,14 +50,13 @@ public class Validator {
 
     }
 
-    public void validateDelimiters(String targetInput) {
+    public void validateDelimiters(Set<Character> delimiter, String targetInput) {
 
-        if (targetInput.charAt(0) == ',' || targetInput.charAt(0) == ':') {
+        if (delimiter.contains(targetInput.charAt(0))) {
             throw new IllegalArgumentException("처음에 구분자가 있습니다");
         }
 
-        if (targetInput.charAt(targetInput.length() - 1) == ','
-                || targetInput.charAt(targetInput.length() - 1) == ':') {
+        if (delimiter.contains(targetInput.charAt(targetInput.length() - 1))) {
             throw new IllegalArgumentException("끝에 구분자가 있습니다");
         }
 
